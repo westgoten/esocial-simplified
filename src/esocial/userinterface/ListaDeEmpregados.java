@@ -1,0 +1,268 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package esocial.userinterface;
+
+import esocial.people.Empregado;
+import esocial.people.Empregador;
+import java.awt.Component;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
+
+/**
+ *
+ * @author Izadora
+ */
+public class ListaDeEmpregados extends javax.swing.JFrame {
+    private static Empregado[] empregadosCadastrados;
+    private static Empregador empregadorConsultado;
+
+    /**
+     * Creates new form ListaDeEmpregados
+     */
+    public ListaDeEmpregados() {
+        initComponents();
+    }
+    
+    private void preencherDados() {
+        if (empregadosCadastrados != null) {
+            nomeEmpregadorTexto.setText(empregadorConsultado.getNome());
+            cpfEmpregadorTexto.setValue(empregadorConsultado.getCpf());
+        }
+        preencherTabela();
+    }
+    
+        private void preencherTabela() {
+        String[] columnNames = {"Nome do empregado", "Cpf do empregado", 
+            "Salário (R$)", "Telefone"};
+        List<String[]> tempData = new ArrayList<>();
+        
+        String[][] data;
+        int numRows;
+        
+        if (empregadosCadastrados != null) {
+            for (Empregado empregado : empregadosCadastrados) {
+                if (empregado != null) {
+                    String[] row = {empregado.getNome(), empregado.getCpf(), 
+                                    String.valueOf(empregado.getSalario()), 
+                                    empregado.getTelefone()};
+                    tempData.add(row);
+                }
+            }
+            
+            numRows = tempData.size();
+            if (numRows >= 1) {
+                data = new String[numRows][columnNames.length];
+                tempData.toArray(data);
+            } else {
+                data = new String[1][columnNames.length];
+            }
+        } else {
+            data = new String[1][columnNames.length];
+        }
+        
+        DefaultTableModel tableModel = new DefaultTableModel(data, columnNames) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        listaEmpregadosCadastradosTable.setModel(tableModel);
+    }
+
+    private void ajustarColunas() {
+        TableModel model = (TableModel) listaEmpregadosCadastradosTable.getModel();
+        TableColumn column;
+        Component comp;
+        int headerWidth;
+        int cellWidth;
+        TableCellRenderer headerRenderer =
+            listaEmpregadosCadastradosTable.getTableHeader().getDefaultRenderer();
+
+        for (int i = 0; i < model.getColumnCount(); i++) {
+            column = listaEmpregadosCadastradosTable.getColumnModel().getColumn(i);
+
+            comp = headerRenderer.getTableCellRendererComponent(
+                                 null, column.getHeaderValue(),
+                                 false, false, -1, i);
+            headerWidth = comp.getPreferredSize().width;
+
+            comp = listaEmpregadosCadastradosTable.getDefaultRenderer(model.getColumnClass(i)).
+                             getTableCellRendererComponent(listaEmpregadosCadastradosTable, 
+                                     model.getValueAt(0, i), false, false, 0, i);
+            cellWidth = comp.getPreferredSize().width;
+
+            column.setPreferredWidth(Math.max(headerWidth, cellWidth));
+        }
+    }
+
+    public JScrollPane getListaEmpregadosCadastradosScroll() {
+        return listaEmpregadosCadastradosScroll;
+    }
+
+    public void setListaEmpregadosCadastradosScroll(JScrollPane listaEmpregadosCadastradosScroll) {
+        this.listaEmpregadosCadastradosScroll = listaEmpregadosCadastradosScroll;
+    }
+
+    public JTable getListaEmpregadosCadastradosTable() {
+        return listaEmpregadosCadastradosTable;
+    }
+
+    public void SetListaEmpregadosCadastradosTable(JTable listaEmpregadosCadastradosTable) {
+        this.listaEmpregadosCadastradosTable = listaEmpregadosCadastradosTable;
+    }
+
+    public static void setEmpregadosCadastrados(Empregado[] empregadosCadastrados) {
+        ListaDeEmpregados.empregadosCadastrados = empregadosCadastrados;
+    }
+
+    public static void setEmpregadorConsultado(Empregador empregadorConsultado) {
+        ListaDeEmpregados.empregadorConsultado = empregadorConsultado;
+    }
+    
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        listaEmpregadosCadastradosLabel = new javax.swing.JLabel();
+        listaEmpregadosCadastradosScroll = new javax.swing.JScrollPane();
+        listaEmpregadosCadastradosTable = new javax.swing.JTable();
+        nomeEmpregadorLabel = new javax.swing.JLabel();
+        cpfEmpregadorLabel = new javax.swing.JLabel();
+        nomeEmpregadorTexto = new javax.swing.JTextField();
+        cpfEmpregadorTexto = new javax.swing.JFormattedTextField();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        listaEmpregadosCadastradosLabel.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        listaEmpregadosCadastradosLabel.setText("Lista de empregados cadastrados");
+
+        listaEmpregadosCadastradosTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        listaEmpregadosCadastradosScroll.setViewportView(listaEmpregadosCadastradosTable);
+
+        nomeEmpregadorLabel.setText("Nome do empregador");
+
+        cpfEmpregadorLabel.setText("CPF do empregador");
+
+        nomeEmpregadorTexto.setEditable(false);
+
+        cpfEmpregadorTexto.setEditable(false);
+        try {
+            cpfEmpregadorTexto.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(listaEmpregadosCadastradosLabel)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(20, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(listaEmpregadosCadastradosScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 736, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(nomeEmpregadorLabel)
+                            .addComponent(cpfEmpregadorLabel))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(nomeEmpregadorTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cpfEmpregadorTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(0, 20, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(listaEmpregadosCadastradosLabel)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nomeEmpregadorLabel)
+                    .addComponent(nomeEmpregadorTexto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cpfEmpregadorLabel)
+                    .addComponent(cpfEmpregadorTexto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addComponent(listaEmpregadosCadastradosScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(ListaDeEmpregados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(ListaDeEmpregados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(ListaDeEmpregados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(ListaDeEmpregados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(() -> {
+            ListaDeEmpregados listaEmpregadosCadastrados = new ListaDeEmpregados();
+            listaEmpregadosCadastrados.preencherDados();
+            listaEmpregadosCadastrados.ajustarColunas();
+            listaEmpregadosCadastrados.setVisible(true);
+            listaEmpregadosCadastrados.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel cpfEmpregadorLabel;
+    private javax.swing.JFormattedTextField cpfEmpregadorTexto;
+    private javax.swing.JLabel listaEmpregadosCadastradosLabel;
+    private javax.swing.JScrollPane listaEmpregadosCadastradosScroll;
+    private javax.swing.JTable listaEmpregadosCadastradosTable;
+    private javax.swing.JLabel nomeEmpregadorLabel;
+    private javax.swing.JTextField nomeEmpregadorTexto;
+    // End of variables declaration//GEN-END:variables
+}
