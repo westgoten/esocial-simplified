@@ -7,7 +7,7 @@ of the [official](https://portal.esocial.gov.br/) eSocial.**
 
 ![screenshot](./screenshots/screenshot_1.png)
 
-You can watch a video demo [here]() (TO DO).
+You can watch a video demo [here](https://youtu.be/iDQSkak4rcU).
 
 This project was built for a class assignment during my Bachelor's Degree in
 Computer Science on November, 2018.
