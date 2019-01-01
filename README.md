@@ -13,7 +13,7 @@ This project was built for a class assignment during my Bachelor's Degree in
 Computer Science on November, 2018.
 
 Thanks to my colleague [Izadora](https://www.linkedin.com/in/izadorapaim/),
-whom participated in the project.
+who participated in the project.
 
 ## How to run the app
 You'll need to install [NetBeans](https://netbeans.apache.org/download/index.html)
